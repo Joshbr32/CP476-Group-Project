@@ -1,7 +1,19 @@
 <?php
-function fetch_student_names($conn) {
-    $sql = "SELECT student_id, student_name FROM `Name Table`";
-    $result = $conn->query($sql);
+function fetch_student_names($conn, $selected_student_ids = null) {
+    if ($selected_student_ids === null || count($selected_student_ids) === 0) {
+        $sql = "SELECT student_id, student_name FROM `Name Table`";
+        $result = $conn->query($sql);
+    } else {
+        $sql = "SELECT student_id, student_name FROM `Name Table` WHERE student_id IN (" . str_repeat('?,', count($selected_student_ids) - 1) . "?)";
+        $stmt = $conn->prepare($sql);
+
+        $types = str_repeat("i", count($selected_student_ids));
+        $stmt->bind_param($types, ...$selected_student_ids);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+
     $data = array();
 
     if ($result->num_rows > 0) {
@@ -9,11 +21,12 @@ function fetch_student_names($conn) {
             $data[$row['student_id']] = $row['student_name'];
         }
     }
+
     return $data;
 }
 
 function fetch_courses_by_student_id($conn, $student_id) {
-    $sql = "SELECT * FROM `CourseTable` WHERE student_id = ?";
+    $sql = "SELECT * FROM `Course Table` WHERE student_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $student_id);
     $stmt->execute();
@@ -30,17 +43,19 @@ function fetch_courses_by_student_id($conn, $student_id) {
     return $courses;
 }
 
-function fetch_student_courses($conn) {
-    $student_names = fetch_student_names($conn);
+function fetch_student_courses($conn, $selected_student_ids) {
+    $student_names = fetch_student_names($conn, $selected_student_ids);
     $data = array();
 
     foreach ($student_names as $student_id => $student_name) {
         $courses = fetch_courses_by_student_id($conn, $student_id);
-        $data[] = array(
-            'student_id' => $student_id,
-            'student_name' => $student_name,
-            'courses' => $courses
-        );
+        foreach ($courses as $course) {
+            $course_data = array(
+                'student_id' => $student_id,
+                'student_name' => $student_name,
+            );
+            $data[] = array_merge($course_data, $course);
+        }
     }
 
     return $data;
