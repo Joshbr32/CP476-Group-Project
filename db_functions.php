@@ -49,13 +49,11 @@ function fetch_student_courses($conn, $selected_student_ids) {
 
     foreach ($student_names as $student_id => $student_name) {
         $courses = fetch_courses_by_student_id($conn, $student_id);
-        foreach ($courses as $course) {
-            $course_data = array(
-                'student_id' => $student_id,
-                'student_name' => $student_name,
-            );
-            $data[] = array_merge($course_data, $course);
-        }
+        $data[] = array(
+            'student_id' => $student_id,
+            'student_name' => $student_name,
+            'courses' => $courses
+        );
     }
 
     return $data;
