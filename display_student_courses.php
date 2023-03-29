@@ -6,6 +6,9 @@ $conn = connect_to_database();
 
 $selected_student_ids = $_SESSION['selectedStudentIds'] ?? [];
 $student_courses = fetch_student_courses($conn, $selected_student_ids);
+echo "<pre>";
+var_dump($selected_student_ids);
+echo "</pre>";
 ?>
 
 <!DOCTYPE html>

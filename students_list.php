@@ -5,9 +5,9 @@ include 'db_functions.php';
 $conn = connect_to_database();
 $students = fetch_student_names($conn);
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['submit_students'])) {
     $_SESSION['selectedStudentIds'] = $_POST['students'];
-    header('Location: display_student_courses.php');
+
 }
 ?>
 
@@ -20,13 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h1>Students List</h1>
-    <form id="studentForm" action="db_config.php" method="POST">
+    <form id="studentForm" method="POST">
         <?php
         foreach ($students as $student_id => $student_name) {
             echo "<input type='checkbox' name='students[]' value='$student_id'> $student_name<br>";
         }
         ?>
-        <input type="submit" value="Submit">
+        <input type="submit" name="submit_students" value="Submit">
     </form>
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        echo "POST data: ";
+        var_dump($_POST);
+    }
+    ?>
 </body>
 </html>
