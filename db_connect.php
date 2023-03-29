@@ -26,8 +26,4 @@ function connect_to_database() {
 
     return $conn;
 }
-
-function select_data(){
-
-}
 ?>

@@ -4,12 +4,7 @@ include 'db_functions.php';
 
 $conn = connect_to_database();
 
-if (isset($_GET['selected_students'])) {
-    $selected_student_ids = array_map('intval', explode(',', $_GET['selected_students']));
-} else {
-    $selected_student_ids = json_decode($_GET['selectedStudentIds']);
-}
-
+$selected_student_ids = $_SESSION['selectedStudentIds'] ?? [];
 $student_courses = fetch_student_courses($conn, $selected_student_ids);
 ?>
 
@@ -19,30 +14,34 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Display Student Courses</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            const selectedStudentIds = JSON.parse(localStorage.getItem('selectedStudentIds'));
-            fetch_student_courses(selectedStudentIds);
-        });
-
-        function fetch_student_courses(studentIds) {
-            $.ajax({
-                url: 'fetch_student_courses.php',
-                type: 'POST',
-                data: {
-                    studentIds: studentIds
-                },
-                success: function(response) {
-                    $("#courses").html(response);
-                }
-            });
-        }
-    </script>
 </head>
 <body>
     <h1>Student Courses</h1>
-    <div id="courses"></div>
+    <table border="1">
+        <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Course Code</th>
+            <th>Test 1</th>
+            <th>Test 2</th>
+            <th>Test 3</th>
+            <th>Final Exam</th>
+        </tr>
+        <?php
+        foreach ($student_courses as $student_course) {
+            echo "<tr>";
+            echo "<td>" . $student_course['student_id'] . "</td>";
+            echo "<td>" . $student_course['student_name'] . "</td>";
+            echo "<td>" . $student_course['course_code'] . "</td>";
+            echo "<td>" . $student_course['test_1'] . "</td>";
+            echo "<td>" . $student_course['test_2'] . "</td>";
+            echo "<td>" . $student_course['test_3'] . "</td>";
+            echo "<td>" . $student_course['final_exam'] . "</td>";
+            echo "</tr>";
+        }
+        ?>
+    </table>
+    <br>
     <button onclick="window.location.href='students_list.php'">Back</button>
 </body>
 </html>
