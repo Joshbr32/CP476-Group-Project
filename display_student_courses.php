@@ -32,21 +32,16 @@ echo "</pre>";
         </tr>
         <?php
         foreach ($student_courses as $student_course) {
-    $student_id = $student_course['student_id'];
-    $student_name = $student_course['student_name'];
-    foreach ($student_course['courses'] as $course) {
-        echo "<tr>";
-        echo "<td>" . $student_id . "</td>";
-        echo "<td>" . $student_name . "</td>";
-        echo "<td>" . $course['course_code'] . "</td>";
-        echo "<td>" . $course['test_1'] . "</td>";
-        echo "<td>" . $course['test_2'] . "</td>";
-        echo "<td>" . $course['test_3'] . "</td>";
-        echo "<td>" . $course['final_exam'] . "</td>";
-        echo "</tr>";
-    }
-}
-
+            echo "<tr>";
+            echo "<td>" . $student_course['student_id'] . "</td>";
+            echo "<td>" . $student_course['student_name'] . "</td>";
+            echo "<td>" . $student_course['course_code'] . "</td>";
+            echo "<td>" . $student_course['test_1'] . "</td>";
+            echo "<td>" . $student_course['test_2'] . "</td>";
+            echo "<td>" . $student_course['test_3'] . "</td>";
+            echo "<td>" . $student_course['final_exam'] . "</td>";
+            echo "</tr>";
+        }
         ?>
     </table>
     <br>
