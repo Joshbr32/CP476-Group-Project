@@ -157,69 +157,68 @@ function create_tables($conn, $table = null) {
 
 
 function upload_name_table($conn, $file_path) {
-    $file = fopen($file_path, 'r');
+    $sql = "INSERT INTO `name table` (Student_ID, Student_Name) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        echo "Error preparing the statement: " . $conn->error . "<br>";
+        return false;
+    }
 
-    while (!feof($file)) {
-        $line = fgets($file);
-        $line = trim($line);
+    $file = fopen($file_path, "r");
+    if (!$file) {
+        echo "Error opening the file.<br>";
+        return false;
+    }
 
-        if ($line === '') {
+    while (($line = fgets($file)) !== false) {
+        $parts = explode(",", trim($line));
+        if (count($parts) < 2) {
+            echo "Error: Invalid line format: '$line'<br>";
             continue;
         }
 
-        $data = explode(',', $line);
-        $student_id = intval(trim($data[0]));
-        $student_name = trim($data[1]);
+        $student_id = $parts[0];
+        $student_name = $parts[1];
 
-        $sql = "INSERT INTO `Name Table` (`Student_ID`, `Student_Name`) VALUES (?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('is', $student_id, $student_name);
-        $stmt->execute();
+        $stmt->bind_param("is", $student_id, $student_name);
+
     }
 
     fclose($file);
+    return true;
 }
+
 
 function upload_course_table($conn, $file_path) {
-    $file = fopen($file_path, 'r');
+    $sql = "INSERT INTO `Course Table` (student_id, course_name, course_grade) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isi", $student_id, $course_name, $course_grade);
 
-    while (!feof($file)) {
-        $line = fgets($file);
-        $line = trim($line);
+    $file = fopen($file_path, "r");
+    if (!$file) {
+        echo "Error: Failed to open file.";
+        return;
+    }
 
-        if ($line === '') {
+    while (($line = fgets($file)) !== false) {
+        $parts = explode(",", trim($line));
+        if (count($parts) < 3) {
+            echo "Error: Invalid line format: '$line'<br>";
             continue;
         }
 
-        $data = explode(',', $line);
-        $student_id = intval(trim($data[0]));
-        $course_code = trim($data[1]);
-        $test_1 = floatval(trim($data[2]));
-        $test_2 = floatval(trim($data[3]));
-        $test_3 = floatval(trim($data[4]));
-        $final_exam = floatval(trim($data[5]));
+        $student_id = intval($parts[0]);
+        $course_name = $parts[1];
+        $course_grade = intval($parts[2]);
 
-        // Check if the Student_ID exists in the Name Table
-        $sql = "SELECT COUNT(*) as count FROM `Name Table` WHERE Student_ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $student_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        if ($row['count'] == 0) {
-            // If the Student_ID does not exist in the Name Table, skip this record and continue with the next one
-            continue;
+        if (!$stmt->execute()) {
+            echo "Error: Failed to insert course data for student ID $student_id, course name '$course_name', and course grade $course_grade<br>";
         }
-
-        $sql = "INSERT INTO `Course Table` (`Student_ID`, `Course_Code`, `Test_1`, `Test_2`, `Test_3`, `Final_Exam`) VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('isdddd', $student_id, $course_code, $test_1, $test_2, $test_3, $final_exam);
-        $stmt->execute();
     }
 
     fclose($file);
 }
+
 
 
 ?>
