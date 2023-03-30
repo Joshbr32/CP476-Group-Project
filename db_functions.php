@@ -1,6 +1,6 @@
 <?php
 function fetch_student_names($conn, $selected_student_ids = null) {
-    if ($selected_student_ids === null || count($selected_student_ids) === 0) {
+    if ($selected_student_ids === null) {
         $sql = "SELECT student_id, student_name FROM `Name Table`";
         $result = $conn->query($sql);
     } else {
