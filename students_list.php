@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h1>Students List</h1>
-    <form id="studentForm" action="db_config.php" method="POST">
+    <form id="studentForm" method="POST">
         <?php
         foreach ($students as $student_id => $student_name) {
             echo "<input type='checkbox' name='students[]' value='$student_id'> $student_name<br>";
