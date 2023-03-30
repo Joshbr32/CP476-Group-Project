@@ -50,6 +50,6 @@ function calculate_final_grade($test1, $test2, $test3, $final_exam) {
         ?>
     </table>
     <br>
-    <button onclick="window.location.href='students_list.php'">Back</button>
+    <button onclick="window.location.href='display_student_courses.php'">Back</button>
 </body>
 </html>

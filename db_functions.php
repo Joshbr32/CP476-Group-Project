@@ -58,4 +58,15 @@ function fetch_student_courses($conn, $selected_student_ids) {
 
     return $data;
 }
+
+function update_courses($conn, $courses_data) {
+foreach ($courses_data as $student_id => $courses) {
+    foreach ($courses as $course_code => $course_values) {
+        $sql = "UPDATE `Course Table` SET test_1 = ?, test_2 = ?, test_3 = ?, final_exam = ? WHERE student_id = ? AND course_code = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ddddis", $course_values['test_1'], $course_values['test_2'], $course_values['test_3'], $course_values['final_exam'], $student_id, $course_code);
+        $stmt->execute();
+    }
+}
+}
 ?>
