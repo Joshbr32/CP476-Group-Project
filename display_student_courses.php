@@ -44,10 +44,10 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
                         $first_course = false;
                     }
                     echo "<td>" . $course['course_code'] . "</td>";
-                    echo "<td><input type='number' name='courses[{$student_id}][{$course['course_code']}][test_1]' value='{$course['test_1']}' /></td>";
-                    echo "<td><input type='number' name='courses[{$student_id}][{$course['course_code']}][test_2]' value='{$course['test_2']}' /></td>";
-                    echo "<td><input type='number' name='courses[{$student_id}][{$course['course_code']}][test_3]' value='{$course['test_3']}' /></td>";
-                    echo "<td><input type='number' name='courses[{$student_id}][{$course['course_code']}][final_exam]' value='{$course['final_exam']}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][test_1]' value='{$course['test_1']}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][test_2]' value='{$course['test_2']}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][test_3]' value='{$course['test_3']}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][final_exam]' value='{$course['final_exam']}' /></td>";
                     echo "</tr>";
                 }
             }
