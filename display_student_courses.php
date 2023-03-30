@@ -1,16 +1,15 @@
 <?php
-include 'db_connect.php';
-include 'db_functions.php';
+include "db_connect.php";
+include "db_functions.php";
 
 $conn = connect_to_database();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_changes'])) {
-    update_courses($conn, $_POST['courses']);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["save_changes"])) {
+    update_courses($conn, $_POST["courses"]);
 }
 
-$selected_student_ids = $_SESSION['selectedStudentIds'] ?? [];
+$selected_student_ids = $_SESSION["selectedStudentIds"] ?? [];
 $student_courses = fetch_student_courses($conn, $selected_student_ids);
-
 ?>
 
 <!DOCTYPE html>
@@ -32,26 +31,26 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
                 <th>Test 3</th>
                 <th>Final Exam</th>
             </tr>
-            <?php
-            foreach ($student_courses as $student_course) {
-                $student_id = $student_course['student_id'];
+            <?php foreach ($student_courses as $student_course) {
+                $student_id = $student_course["student_id"];
                 $first_course = true;
-                $course_count = count($student_course['courses']);
-                foreach ($student_course['courses'] as $course) {
+                $course_count = count($student_course["courses"]);
+                foreach ($student_course["courses"] as $course) {
                     echo "<tr>";
                     if ($first_course) {
-                        echo "<td rowspan='$course_count'>" . $student_id . "</td>";
+                        echo "<td rowspan='$course_count'>" .
+                            $student_id .
+                            "</td>";
                         $first_course = false;
                     }
-                    echo "<td>" . $course['course_code'] . "</td>";
-                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][test_1]' value='{$course['test_1']}' /></td>";
-                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][test_2]' value='{$course['test_2']}' /></td>";
-                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][test_3]' value='{$course['test_3']}' /></td>";
-                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course['course_code']}][final_exam]' value='{$course['final_exam']}' /></td>";
+                    echo "<td>" . $course["Course_Code"] . "</td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course["Course_Code"]}][Test_1]' value='{$course["Test_1"]}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course["Course_Code"]}][Test_2]' value='{$course["Test_2"]}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course["Course_Code"]}][Test_3]' value='{$course["Test_3"]}' /></td>";
+                    echo "<td><input type='number' min='0' max='100' name='courses[{$student_id}][{$course["Course_Code"]}][Final_Exam]' value='{$course["Final_Exam"]}' /></td>";
                     echo "</tr>";
                 }
-            }
-            ?>
+            } ?>
         </table>
         <br>
         <input type="submit" name="save_changes" value="Save Changes">
