@@ -48,9 +48,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
   <h1>Students List</h1>
   <form id="studentForm" method="POST" onsubmit="return validateForm();">
-    <?php foreach ($student_names as $student_id => $student_name) {
-        echo "<input type='checkbox' name='students[]' value='$student_id'> $student_name<br>";
-    } ?>
+    <table>
+      <table border="1">
+      <tr>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Select</th>
+      </tr>
+      <?php foreach ($student_names as $student_id => $student_name) {
+          echo "<tr>";
+          echo "<td>$student_id</td>";
+          echo "<td>$student_name</td>";
+          echo "<td><input type='checkbox' name='students[]' value='$student_id'></td>";
+          echo "</tr>";
+      } ?>
+    </table>
     <input type="submit" value="Submit">
   </form>
   <br>
