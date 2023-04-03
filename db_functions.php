@@ -192,7 +192,7 @@ function create_tables($conn, $table = null)
 
 function upload_name_table($conn, $file_path)
 {
-    $sql = "INSERT INTO `name table` (Student_ID, Student_Name) VALUES (?, ?)";
+    $sql = "INSERT INTO `Name Table` (Student_ID, Student_Name) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         //echo "Error preparing the statement: " . $conn->error . "<br>";
