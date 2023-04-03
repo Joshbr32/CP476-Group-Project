@@ -53,6 +53,7 @@ if (isset($_SESSION["upload_name_first"])) {
 
 <!DOCTYPE html>
 <html lang="en">
+<link href="style.css" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,12 +84,13 @@ if (isset($_SESSION["upload_name_first"])) {
   }
   </script>
 </head>
-<body>
-  <h1>Upload Data</h1>
+<body class="body">
+  <h1 style="text-align: center;">Upload Data</h1>
+<div class="upload_box">
   <h2>Upload Name Table</h2>
   <form action="upload_data.php" method="post" enctype="multipart/form-data" onsubmit="return validateNameUpload();">
     <input type="file" name="name_txt" accept=".txt">
-    <input type="submit" name="upload_name_table" value="Upload Name Table">
+    <input class="upload_button" type="submit" name="upload_name_table" value="Upload Name Table">
   </form>
   <?php if ($upload_name_success) {
       echo "<p>Name Table has been successfully uploaded.</p>";
@@ -97,16 +99,17 @@ if (isset($_SESSION["upload_name_first"])) {
   <h2>Upload Course Table</h2>
   <form action="upload_data.php" method="post" enctype="multipart/form-data" onsubmit="return checkNameFileUploaded() && validateCourseUpload();">
     <input type="file" name="course_txt" accept=".txt">
-    <input type="submit" name="upload_course_table" value="Upload Course Table">
+    <input class="upload_button" type="submit" name="upload_course_table" value="Upload Course Table">
   </form>
   <?php if ($upload_course_success) {
       echo "<p>Course Table has been successfully uploaded.</p>";
   } ?>
 
   <?php if ($upload_name_success && $upload_course_success): ?>
-    <form action="students_list.php" method="get">
-      <input type="submit" value="Go to Students List">
+    <form style="text-align: center;" action="students_list.php" method="get">
+      <input class="upload_button" type="submit" value="Go to Students List">
     </form>
   <?php endif; ?>
+</div>
 </body>
 </html>

@@ -14,18 +14,19 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
 
 <!DOCTYPE html>
 <html lang="en">
+<link href="style.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Display Student Courses</title>
 </head>
-<body>
-    <h1>Student Courses</h1>
+<body class="body">
+    <h1 style="text-align: center;">Student Courses</h1>
     <form id="updateForm" method="POST" onsubmit="return validateForm()">
-        <table border="1">
+        <table class="student_table" border="1">
             <tr>
-                <th>Student ID</th>
-                <th>Course Code</th>
+                <th style="text-align: left;">Student ID</th>
+                <th style="text-align: left;">Course Code</th>
                 <th>Test 1</th>
                 <th>Test 2</th>
                 <th>Test 3</th>
@@ -53,12 +54,15 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
             } ?>
         </table>
         <br>
-        <input type="submit" name="save_changes" value="Save Changes">
+        <div style="text-align: center;">
+            <input class="table_buttons" type="submit" name="save_changes" value="Save Changes">
+        </div>
     </form>
     <br>
-    <button onclick="window.location.href='students_list.php'">Back</button>
-    <button onclick="window.location.href='display_final_grades.php'">Calculate grades</button>
-
+    <div style="text-align: center;">
+        <button class="table_buttons" onclick="window.location.href='students_list.php'">Back</button>
+        <button class="table_buttons" onclick="window.location.href='display_final_grades.php'">Calculate grades</button>
+    </div>
     <script>
     function validateForm() {
         let inputs = document.querySelectorAll('input[type="number"]');

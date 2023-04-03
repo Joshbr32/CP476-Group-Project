@@ -20,19 +20,20 @@ if (isset($_POST["upload_to_database"])) {
 
 <!DOCTYPE html>
 <html lang="en">
+<link href="style.css" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Display Final Grades</title>
 </head>
-<body>
-  <h1>Final Grades</h1>
-  <table border="1">
+<body class="body">
+  <h1 style="text-align: center;">Final Grades</h1>
+  <table class="student_table" border="1">
     <tr>
-      <th>Student ID</th>
-      <th>Student Name</th>
-      <th>Course Code</th>
-      <th>Final Grade</th>
+      <th style="text-align: left;">Student ID</th>
+      <th style="text-align: left;">Student Name</th>
+      <th style="text-align: left;">Course Code</th>
+      <th style="text-align: left;">Final Grade</th>
     </tr>
     <?php foreach ($student_courses as $student_course) {
         $student_id = $student_course["student_id"];
@@ -59,9 +60,11 @@ if (isset($_POST["upload_to_database"])) {
     } ?>
   </table>
   <br>
-  <button onclick="window.location.href='display_student_courses.php'">Back</button>
-  <form method="POST" style="display: inline;">
-    <input type="submit" name="upload_to_database" value="Upload to Database">
-  </form>
+  <div style="text-align: center;">
+    <button class="table_buttons" onclick="window.location.href='display_student_courses.php'">Back</button>
+    <form method="POST" style="display: inline;">
+      <input class="table_buttons" type="submit" name="upload_to_database" value="Upload to Database">
+    </form>
+  </div>
 </body>
 </html>

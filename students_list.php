@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+<link href="style.css" rel="stylesheet">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,15 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   </script>
 </head>
-<body>
-  <h1>Students List</h1>
+<body class="body">
+  <h1 style="text-align: center;">Students List</h1>
   <form id="studentForm" method="POST" onsubmit="return validateForm();">
-    <table>
-      <table border="1">
+    <table class="student_table" border="1">
       <tr>
-        <th>Student ID</th>
-        <th>Student Name</th>
-        <th>Select</th>
+        <th style="text-align: left;">Student ID</th>
+        <th style="text-align: left;">Student Name</th>
+        <th style="text-align: center;">Select</th>
       </tr>
       <?php foreach ($student_names as $student_id => $student_name) {
           echo "<tr>";
@@ -63,10 +63,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           echo "</tr>";
       } ?>
     </table>
-    <input type="submit" value="Submit">
+    <div style="text-align: center;">
+      <input class="upload_button" type="submit" value="Submit">
+    </div>
   </form>
   <br>
-  <button onclick="selectAll()">Select All</button>
-  <button onclick="selectNone()">Select None</button>
+  <div style="text-align: center;">
+    <button class="upload_button" onclick="selectAll()">Select All</button>
+    <button class="upload_button" onclick="selectNone()">Select None</button>
+  </div>
 </body>
 </html>

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
+  <link href="style.css" rel="stylesheet">
 <head>
-    <title>Login Form</title>
+    <title>SQL Server Login</title>
 </head>
-<body>
-  <h1>Log into SQL Server</h1>
-    <form action="db_config.php" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        <br>
-        <input type="submit" value="Login">
+<body class="body">
+    <h1 style="text-align: center;">Group 18 SQL Server</h1>
+  <div class="login_box">
+  <h2 style="text-align: center;font-weight:bold;">Login</h2>
+    <form style="text-align: center;" action="login.php" method="POST">
+        <label for="username" style="font-size: 18px;">Username:</label><br>
+        <input class="login_input" type="text" name="username" id="username" placeholder="username" required>
+        <br><br>
+        <label for="password" style="font-size: 18px;">Password:</label><br>
+        <input class="login_input" type="password" name="password" id="password" placeholder="password" required>
+        <br><br>
+        <button class="login_button" type="submit">Log In</button>
     </form>
+  </div>
 </body>
 </html>
