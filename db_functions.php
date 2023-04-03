@@ -192,8 +192,6 @@ function create_tables($conn, $table = null)
 
 function upload_name_table($conn, $file_path)
 {
-    drop_tables($conn, `Name Table`);
-    create_tables($conn, `Name Table`);
     $sql = "INSERT INTO `Name Table` (Student_ID, Student_Name) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -219,11 +217,12 @@ function upload_name_table($conn, $file_path)
 
         $stmt->bind_param("is", $student_id, $student_name);
 
-        try {
-            $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            echo "<script>alert('Database error while uploading, please check your Name File to ensure it is formatted properly');</script>";
-            return "Database error, please check your file to ensure it is formatted properly.";
+        if ($stmt->execute()) {
+            //echo "Inserted: $student_id, $student_name<br>";
+        } else {
+            echo "Error inserting: $student_id, $student_name. Error: " .
+                $stmt->error .
+                "<br>";
         }
     }
 
@@ -233,8 +232,6 @@ function upload_name_table($conn, $file_path)
 
 function upload_course_table($conn, $file_path)
 {
-  drop_tables($conn, `Course Table`);
-  create_tables($conn, `Course Table`);
     $file = fopen($file_path, "r");
 
     while (!feof($file)) {
@@ -279,12 +276,7 @@ function upload_course_table($conn, $file_path)
             $test_3,
             $final_exam
         );
-        try {
-            $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            echo "<script>alert('Database error while uploading, please check your Course File to ensure it is formatted properly');</script>";
-            return "Database error while uploading, please check your Course File to ensure it is formatted properly.";
-        }
+        $stmt->execute();
     }
 
     fclose($file);
