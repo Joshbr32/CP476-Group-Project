@@ -27,7 +27,7 @@ if (isset($_POST["upload_to_database"])) {
   <title>Display Final Grades</title>
 </head>
 <body class="body">
-  <h1 style="text-align: center;">Final Grades</h1>
+  <h1 style="text-align: center;">Final Grades | Grade Table</h1>
   <table class="student_table" border="1">
     <tr>
       <th style="text-align: left;">Student ID</th>

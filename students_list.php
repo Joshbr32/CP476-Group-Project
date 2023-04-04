@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </script>
 </head>
 <body class="body">
-  <h1 style="text-align: center;">Students List</h1>
+  <h1 style="text-align: center;">Student List | Name Table</h1>
   <form id="studentForm" method="POST" onsubmit="return validateForm();">
     <table class="student_table" border="1">
       <tr>

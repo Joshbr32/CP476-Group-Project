@@ -93,7 +93,7 @@
     border-radius: 4px;
 }
 
-input::file-selector-button {
+input[type="file" i]{
     background-color: #008CBA;
     border: none;
     color: white;

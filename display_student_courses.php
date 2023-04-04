@@ -21,7 +21,7 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
     <title>Display Student Courses</title>
 </head>
 <body class="body">
-    <h1 style="text-align: center;">Student Courses</h1>
+    <h1 style="text-align: center;">Student Courses | Course Table</h1>
     <form id="updateForm" method="POST" onsubmit="return validateForm()">
         <table class="student_table" border="1">
             <tr>
