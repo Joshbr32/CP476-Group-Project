@@ -28,4 +28,5 @@ function connect_to_database()
 
     return $conn;
 }
+
 ?>

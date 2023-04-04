@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <link href="style.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 <head>
     <title>SQL Server Login</title>
+    <script>
+        function validateForm() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const correctUsername = "cp476";
+            const correctPassword = "4v8b3gVScQpwm4CV";
+
+            if (username !== correctUsername || password !== correctPassword) {
+                alert("Database Connection Error: Invalid username or password.");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body class="body">
-    <h1 style="text-align: center;">Group 18 SQL Server</h1>
-  <div class="login_box">
-  <h2 style="text-align: center;font-weight:bold;">Login</h2>
-    <form style="text-align: center;" action="db_config.php" method="POST">
+<h1 style="text-align: center;">Group 18 SQL Server</h1>
+<div class="login_box">
+    <h2 style="text-align: center;font-weight:bold;">Login</h2>
+    <form style="text-align: center;" action="db_config.php" method="POST" onsubmit="return validateForm();">
         <label for="username" style="font-size: 18px;">Username:</label><br>
         <input class="login_input" type="text" name="username" id="username" placeholder="username" required>
         <br><br>
@@ -17,6 +30,6 @@
         <br><br>
         <button class="login_button" type="submit">Log In</button>
     </form>
-  </div>
+</div>
 </body>
 </html>

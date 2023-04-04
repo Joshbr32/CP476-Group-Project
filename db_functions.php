@@ -174,7 +174,7 @@ function create_tables($conn, $table = null)
                 `Test_3` decimal(4,1) NOT NULL, CHECK (`Test_3` >= 0 AND `Test_3` <= 100),
                 `Final_Exam` decimal(4,1) NOT NULL, CHECK (`Final_Exam` >= 0 AND `Final_Exam` <= 100),
                 PRIMARY KEY (`Student_ID`, `Course_Code`),
-                FOREIGN KEY (`Student_ID`) REFERENCES `Name_Table`(`Student_ID`)
+                FOREIGN KEY (`Student_ID`) REFERENCES `Name Table`(`Student_ID`)
             );";
         } else {
             return;
@@ -192,6 +192,7 @@ function create_tables($conn, $table = null)
 
 function upload_name_table($conn, $file_path)
 {
+    create_tables($conn, "Name Table");
     $sql = "INSERT INTO `Name Table` (Student_ID, Student_Name) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -232,7 +233,7 @@ function upload_name_table($conn, $file_path)
 
 function upload_course_table($conn, $file_path)
 {
-
+    create_tables($conn, "Course Table");
     $file = fopen($file_path, "r");
 
     while (!feof($file)) {

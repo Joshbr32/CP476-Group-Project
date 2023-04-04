@@ -4,11 +4,13 @@ include "db_functions.php";
 
 $conn = connect_to_database();
 
+if (!isset($_SESSION["tables_dropped"])) {
+    drop_tables($conn);
+    $_SESSION["tables_dropped"] = true;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["upload_name_table"]) && isset($_FILES["name_txt"])) {
-        drop_tables($conn);
-        create_tables($conn);
-
         $file = $_FILES["name_txt"]["tmp_name"];
         $upload_name_table_result = upload_name_table($conn, $file);
         if ($upload_name_table_result) {
@@ -44,12 +46,12 @@ if (
 ) {
     unset($_SESSION["upload_name_success"]);
     unset($_SESSION["upload_course_success"]);
-    unset($_SESSION["initiated"]);
 }
 if (isset($_SESSION["upload_name_first"])) {
     unset($_SESSION["upload_name_first"]);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
