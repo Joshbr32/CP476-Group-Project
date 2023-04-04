@@ -192,6 +192,7 @@ function create_tables($conn, $table = null)
 
 function upload_name_table($conn, $file_path)
 {
+    drop_tables($conn);
     create_tables($conn, "Name Table");
     $sql = "INSERT INTO `Name Table` (Student_ID, Student_Name) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
@@ -233,6 +234,7 @@ function upload_name_table($conn, $file_path)
 
 function upload_course_table($conn, $file_path)
 {
+    drop_tables($conn, "Course Table");
     create_tables($conn, "Course Table");
     $file = fopen($file_path, "r");
 

@@ -61,7 +61,7 @@ $student_courses = fetch_student_courses($conn, $selected_student_ids);
     <br>
     <div style="text-align: center;">
         <button class="table_buttons" onclick="window.location.href='students_list.php'">Back</button>
-        <button class="table_buttons" onclick="window.location.href='display_final_grades.php'">Calculate grades</button>
+        <button class="table_buttons" onclick="window.location.href='final_grades.php'">Calculate grades</button>
     </div>
     <script>
     function validateForm() {

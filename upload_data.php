@@ -108,7 +108,7 @@ if (isset($_SESSION["upload_name_first"])) {
   } ?>
 
   <?php if ($upload_name_success && $upload_course_success): ?>
-    <form style="text-align: center;" action="students_list.php" method="get">
+    <form style="text-align: center;" action="student_list.php" method="get">
       <input class="upload_button" type="submit" value="Go to Students List">
     </form>
   <?php endif; ?>

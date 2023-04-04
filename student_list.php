@@ -7,7 +7,7 @@ $student_names = fetch_student_names($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION["selectedStudentIds"] = $_POST["students"];
-    header("Location: display_student_courses.php");
+    header("Location: student_courses.php");
 }
 ?>
 
