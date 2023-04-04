@@ -73,11 +73,11 @@
 }
 
 .student_table th{
-    background-color: #9be0f7; 
+    background-color: #9be0f7;
 }
 
 .student_table td{
-    background-color: #c8e7f2; 
+    background-color: #c8e7f2;
 }
 
 .table_buttons{
@@ -89,6 +89,19 @@
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+input::file-selector-button {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
     cursor: pointer;
     border-radius: 4px;
 }

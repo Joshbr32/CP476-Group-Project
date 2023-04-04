@@ -70,14 +70,14 @@ function update_courses($conn, $courses_data)
     foreach ($courses_data as $student_id => $courses) {
         foreach ($courses as $course_code => $course_values) {
             $sql =
-                "UPDATE `Course Table` SET test_1 = ?, test_2 = ?, test_3 = ?, final_exam = ? WHERE student_id = ? AND course_code = ?";
+                "UPDATE `Course Table` SET Test_1 = ?, Test_2 = ?, Test_3 = ?, Final_Exam = ? WHERE Student_ID = ? AND Course_Code = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param(
                 "ddddis",
-                $course_values["test_1"],
-                $course_values["test_2"],
-                $course_values["test_3"],
-                $course_values["final_exam"],
+                $course_values["Test_1"],
+                $course_values["Test_2"],
+                $course_values["Test_3"],
+                $course_values["Final_Exam"],
                 $student_id,
                 $course_code
             );
@@ -232,6 +232,7 @@ function upload_name_table($conn, $file_path)
 
 function upload_course_table($conn, $file_path)
 {
+
     $file = fopen($file_path, "r");
 
     while (!feof($file)) {
