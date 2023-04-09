@@ -60,7 +60,8 @@ if (isset($_SESSION["upload_name_first"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload Data</title>
-  <script>
+  <!--suppress UnreachableCodeJS -->
+    <script>
   function checkNameFileUploaded() {
     <?php if (!$upload_name_success): ?>
     alert("Please upload the Name Table first.");

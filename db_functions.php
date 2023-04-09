@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 function fetch_student_names($conn, $selected_student_ids = null)
 {
     if ($selected_student_ids === null) {
@@ -65,13 +65,24 @@ function fetch_student_courses($conn, $selected_student_ids)
     return $data;
 }
 
+/**
+ * Update course data for each student in the database.
+ *
+ * @param mysqli $conn Connection to the MySQL database.
+ * @param array $courses_data Associative array containing student IDs, course codes, and test scores.
+ */
 function update_courses($conn, $courses_data)
 {
+    // Iterate through each student in the courses_data array
     foreach ($courses_data as $student_id => $courses) {
+        // Iterate through each course for the current student
         foreach ($courses as $course_code => $course_values) {
+            // Prepare the SQL query to update test scores for the current student and course
             $sql =
                 "UPDATE `Course Table` SET Test_1 = ?, Test_2 = ?, Test_3 = ?, Final_Exam = ? WHERE Student_ID = ? AND Course_Code = ?";
             $stmt = $conn->prepare($sql);
+
+            // Bind the variables to the prepared statement's parameters
             $stmt->bind_param(
                 "ddddis",
                 $course_values["Test_1"],
@@ -81,10 +92,19 @@ function update_courses($conn, $courses_data)
                 $student_id,
                 $course_code
             );
-            $stmt->execute();
+
+            try {
+                // Execute the prepared statement to update the database
+                $stmt->execute();
+            } catch (Exception $e) {
+                // returns any errors to the session variable
+                $_SESSION["update_courses_success"] = "Error: " . $e->getMessage();
+            }
+
         }
     }
 }
+
 
 function create_grade_table($conn, $student_courses)
 {

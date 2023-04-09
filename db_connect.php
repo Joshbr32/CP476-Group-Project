@@ -19,20 +19,14 @@ function connect_to_database()
     $password = $credentials["password"];
 
     // Connect to the SQL server using MySQLi
-    try {
-        $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Check connection
-        if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
-        }
-    } catch (Exception $e) {
-        $_SESSION["Database_Error"] = true;
-        return null;
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
     return $conn;
 }
-
 
 ?>
