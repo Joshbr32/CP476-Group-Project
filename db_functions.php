@@ -29,24 +29,53 @@ function fetch_student_names($conn, $selected_student_ids = null)
     return $data;
 }
 
+/**
+ * Fetch all courses for a student from the "Course Table" in the database using the student ID.
+ *
+ * @param mysqli $conn Connection to the MySQL database.
+ * @param int $student_id The student ID for which courses need to be fetched.
+ * @return array An array of courses for the student, or an empty array if no courses are found.
+ */
 function fetch_courses_by_student_id($conn, $student_id)
 {
+    // Prepare the SQL query to fetch courses for a given student ID
     $sql = "SELECT * FROM `Course Table` WHERE student_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $student_id);
-    $stmt->execute();
 
-    $result = $stmt->get_result();
+    // Bind the student ID to the prepared statement's parameter
+    $stmt->bind_param("i", $student_id);
+
+    // Initialize an empty array to store the courses
     $courses = [];
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $courses[] = $row;
+    try {
+        // Execute the prepared statement
+        $stmt->execute();
+
+        // Get the result of the executed statement
+        $result = $stmt->get_result();
+
+        // Check if there are any rows returned in the result
+        if ($result->num_rows > 0) {
+            // Fetch each course from the result and add it to the courses array
+            while ($row = $result->fetch_assoc()) {
+                $courses[] = $row;
+            }
         }
+        else{
+            // If the student has no courses return it to sessions
+            $_SESSION["fetch_courses_by_student_id_success"] = "Error: Student has no courses";
+        }
+    } catch (Exception $e) {
+        // Handle the exception using Sessions
+        $_SESSION["fetch_courses_by_student_id_success"] = "Error: " . $e->getMessage();
     }
 
+    // Return the array of courses for the student
     return $courses;
 }
+
+
 
 function fetch_student_courses($conn, $selected_student_ids)
 {
