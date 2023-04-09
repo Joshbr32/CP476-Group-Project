@@ -210,47 +210,68 @@ function create_tables($conn, $table = null)
     }
 }
 
+/**
+ * Upload name table data from a file and insert it into the "Name Table" in the database.
+ *
+ * @param mysqli $conn Connection to the MySQL database.
+ * @param string $file_path Path to the file containing the name table data.
+ * @return bool Returns true if the upload is successful, false otherwise.
+ */
 function upload_name_table($conn, $file_path)
 {
+    // Drop all tables and recreate the name table
     drop_tables($conn);
     create_tables($conn, "Name Table");
+
+    // Prepare the SQL query to insert data into the name table
     $sql = "INSERT INTO `Name Table` (Student_ID, Student_Name) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
-        //echo "Error preparing the statement: " . $conn->error . "<br>";
         return false;
     }
 
+    // Open the file for reading
     $file = fopen($file_path, "r");
     if (!$file) {
-        //echo "Error opening the file.<br>";
+        $_SESSION["upload_name_table_success"] = "Error: Cannot open file";
         return false;
     }
 
+    // Read each line of the file
     while (($line = fgets($file)) !== false) {
+        // Split the line into parts using comma as the delimiter
         $parts = explode(",", trim($line));
-        if (count($parts) < 2) {
-            //echo "Error: Invalid line format.<br>";
-            continue;
+
+        // Check if the line has the correct format (two parts)
+        if (count($parts) !=  2 || !ctype_digit($parts[0]) || !is_string($parts[1])) {
+            $_SESSION["upload_name_table_success"] = "Error: Incorrect file format";
+            return false;
         }
 
+        // Assign the parts to variables
         $student_id = $parts[0];
         $student_name = $parts[1];
 
+        // Bind the variables to the prepared statement's parameters
         $stmt->bind_param("is", $student_id, $student_name);
 
-        if ($stmt->execute()) {
-            //echo "Inserted: $student_id, $student_name<br>";
-        } else {
-            echo "Error inserting: $student_id, $student_name. Error: " .
-                $stmt->error .
-                "<br>";
+        try {
+            // Execute the prepared statement to insert the data into the database
+            $stmt->execute();
+        } catch (Exception $e) {
+            // Return any exceptions that occur during execution to sessions
+            $_SESSION["upload_name_table_success"] = "Error inserting: $student_id, $student_name. Error: " .
+                $e->getMessage();
+            return false;
         }
     }
 
+    // Close the file
     fclose($file);
+
     return true;
 }
+
 
 function upload_course_table($conn, $file_path)
 {
